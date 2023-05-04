@@ -1,0 +1,17 @@
+pipeline {
+  agent any
+  
+  stages {
+    stage('Build') {
+      steps {
+        bat 'echo "Building..."'
+      }
+    }
+    stage('Deploy') {
+      steps {
+            
+            bat ' ssh -vvv -T -o StrictHostKeyChecking=no -i "dracu.pem" ec2-user@ec2-3-26-131-16.ap-southeast-2.compute.amazonaws.com"'
+      }
+    }
+  }
+}
