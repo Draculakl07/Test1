@@ -28,6 +28,11 @@ pipeline {
        
       }
     }
+    stage('Approval') {
+      steps {
+        sleep 10
+      }
+    }
     
     
     
