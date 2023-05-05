@@ -1,0 +1,54 @@
+pipeline {
+    agent any
+    stages {
+        stage('Build') {
+            steps {
+                bat 'mvn -help'
+            }
+        }
+        stage('Unit and Integration Tests') {
+            steps {
+               echo "mvn test command should be run" 
+            }
+        }
+        stage('Code Analysis') {
+      steps {
+        
+        bat 'echo "y" | plink ec2-54-206-75-12.ap-southeast-2.compute.amazonaws.com -l dracula -pw googlehome12 "pwd"'
+        
+      }
+    }
+        stage('Security Scan') {
+            steps {
+                echo "zap-baseline.py -t https://localhost:8080/ do this to perform owasp scan"
+            }
+        }
+        stage('Deploy to Staging') {
+      steps {
+            bat 'echo "exit" |plink "ec2-3-26-131-16.ap-southeast-2.compute.amazonaws.com" -l USERNAME -pw googlehome12'
+            
+      }
+    }
+        stage('Integration Tests on Staging') {
+            steps {
+                echo"mvn Integration Tests test command should be run"
+            }
+        }
+        stage('Deploy to Production') {
+            steps {
+                bat 'echo "exit" |plink "ec2-3-26-131-16.ap-southeast-2.compute.amazonaws.com" -l USERNAME -pw googlehome12'
+            }
+        }
+     
+    }
+    post {
+        always {
+            emailext (
+                subject: "${currentBuild.result}: ${env.JOB_NAME} - ${env.STAGE_NAME}",
+                body: """${env.JOB_NAME} - ${env.STAGE_NAME} has finished. Result: ${currentBuild.result}""",
+                to: 'instagram4uu@gmail.com'
+
+            )
+        }
+    }
+}
