@@ -29,11 +29,7 @@ pipeline {
       }
     }
     
-    stage('Approval') {
-      steps {
-        sleep 10
-      }
-    }
+    
     
     stage('Deploy to Production') {
       steps {
