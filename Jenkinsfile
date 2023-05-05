@@ -25,7 +25,7 @@ pipeline {
     stage('Deploy') {
       steps {
         echo "Deploying the application to ${env.TESTING_ENVIRONMENT} environment"
-        bat 'type '
+       
       }
     }
     
