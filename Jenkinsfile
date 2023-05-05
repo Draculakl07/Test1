@@ -1,4 +1,8 @@
-stage('Build') {
+pipeline {
+  agent any
+  
+  stages {
+        stage('Build') {
       steps {
         echo "Fetch the source code from the directory path ${env.DIRECTORY_PATH}"
         echo "Compile the code and generate any necessary artifacts"
@@ -43,3 +47,5 @@ stage('Build') {
         subject: 'Pipeline success',
         to: 'instagram4uu@gmail.com'
     }
+  }
+}
